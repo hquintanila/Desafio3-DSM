@@ -1,9 +1,9 @@
 <resources>
     <!-- Nombre de la aplicación -->
-    <string name="app_name">AprendeApp</string>
+    <string name="app_name">ConectaEduc</string>
 
     <!-- Títulos de Pantalla y Secciones -->
-    <string name="title_main">AprendeApp - Inicio</string>
+    <string name="title_main">ConectaEduc - Inicio</string>
     <string name="title_welcome">¡Bienvenido a AprendeApp!</string>
     <string name="title_login">Iniciar Sesión</string>
     <string name="title_register">Registro de Usuario</string>
