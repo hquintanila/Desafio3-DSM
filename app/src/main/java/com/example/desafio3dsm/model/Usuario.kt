@@ -15,7 +15,7 @@ data class Usuario(
     @SerializedName("email")
     val email: String? = null,
 
-    @SerializedName("clave")
+    @SerializedName(value = "contrasena", alternate = ["clave", "password"])
     val clave: String? = null,
 
     @SerializedName("rol")

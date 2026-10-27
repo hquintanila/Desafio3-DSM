@@ -12,8 +12,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -31,7 +33,7 @@
                 android:orientation="vertical"
                 android:padding="28dp">
 
-                <!-- Logo pequeño arriba del nombre de la app -->
+                <!-- Logo pequeño -->
                 <ImageView
                     android:id="@+id/ivAppLogo"
                     android:layout_width="64dp"
@@ -40,7 +42,7 @@
                     android:contentDescription="@string/app_name"
                     android:layout_marginBottom="12dp" />
 
-                <!-- Nombre de la aplicación -->
+                <!-- Título -->
                 <TextView
                     android:id="@+id/tvAppTitle"
                     android:layout_width="wrap_content"
@@ -58,10 +60,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/title_login"
                     android:textSize="18sp"
-                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
                     android:layout_marginBottom="28dp" />
 
-                <!-- Campo Correo -->
+                <!-- Correo -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEmail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -69,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:hint="@string/hint_email"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary">
 
@@ -76,11 +80,13 @@
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Campo Contraseña -->
+                <!-- Contraseña con Ojo Nítido (End Icon Mode) -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassword"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -88,24 +94,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:hint="@string/hint_password"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary"
-                    app:passwordToggleEnabled="true">
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/password_toggle_tint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Botón de Inicio de Sesión Anaranjado Suave -->
+                <!-- Botón Login -->
                 <Button
                     android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="@string/btn_login"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:backgroundTint="@color/orange_primary"
@@ -119,7 +130,7 @@
                     android:visibility="gone"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Enlace de Registro -->
+                <!-- Enlace Registro -->
                 <TextView
                     android:id="@+id/tvGoToRegister"
                     android:layout_width="wrap_content"

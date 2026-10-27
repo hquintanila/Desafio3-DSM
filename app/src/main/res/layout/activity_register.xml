@@ -12,8 +12,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
                     android:contentDescription="@string/app_name"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Nombre de la app -->
+                <!-- Título -->
                 <TextView
                     android:id="@+id/tvAppTitle"
                     android:layout_width="wrap_content"
@@ -58,10 +60,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/title_register"
                     android:textSize="18sp"
-                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
                     android:layout_marginBottom="20dp" />
 
-                <!-- Campos de entrada -->
+                <!-- Nombre -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilNombre"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -69,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="@string/hint_nombre"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary">
 
@@ -76,10 +80,13 @@
                         android:id="@+id/etNombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Correo -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEmail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -87,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="@string/hint_email"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary">
 
@@ -94,10 +102,13 @@
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Contraseña -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassword"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -105,18 +116,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="@string/hint_password"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary"
-                    app:passwordToggleEnabled="true">
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/password_toggle_tint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Confirmar Contraseña -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilConfirmPassword"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -124,14 +140,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:hint="@string/hint_confirm_password"
+                    android:textColorHint="#616161"
                     app:boxStrokeColor="@color/orange_primary"
                     app:hintTextColor="@color/orange_primary"
-                    app:passwordToggleEnabled="true">
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/password_toggle_tint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
                         android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -143,7 +163,7 @@
                     android:text="@string/label_role"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="#424242"
+                    android:textColor="#212121"
                     android:layout_marginBottom="4dp" />
 
                 <Spinner
@@ -154,11 +174,13 @@
                     android:background="@android:drawable/btn_dropdown"
                     android:padding="8dp" />
 
+                <!-- Botón Registrarse -->
                 <Button
                     android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="@string/btn_register"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:backgroundTint="@color/orange_primary"
@@ -176,7 +198,7 @@
                     android:id="@+id/tvGoToLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btn_go_to_login"
+                    android:text="@string/btn_go_to_register"
                     android:textColor="@color/orange_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"

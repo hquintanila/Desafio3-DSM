@@ -39,15 +39,20 @@ class AuthController(
     }
 
     /**
-     * Inicia sesión consumiendo el endpoint /usuarios en MockAPI.
+     * Inicia sesión consumiendo el endpoint /usuarios en MockAPI con limpieza de espacios (trim).
      */
     fun login(email: String, clave: String, callback: AuthCallback<Usuario>) {
+        val cleanEmail = email.trim()
+        val cleanPassword = clave.trim()
+
         apiService.getUsuarios().enqueue(object : Callback<List<Usuario>> {
             override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
                 if (response.isSuccessful) {
                     val usuarios = response.body() ?: emptyList()
-                    val usuarioEncontrado = usuarios.find {
-                        it.email.equals(email, ignoreCase = true) && it.clave == clave
+                    val usuarioEncontrado = usuarios.find { user ->
+                        val dbEmail = user.email?.trim() ?: ""
+                        val dbClave = user.clave?.trim() ?: ""
+                        dbEmail.equals(cleanEmail, ignoreCase = true) && dbClave == cleanPassword
                     }
 
                     if (usuarioEncontrado != null) {
