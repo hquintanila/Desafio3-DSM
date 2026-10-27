@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -16,13 +17,17 @@ import com.example.desafio3dsm.R
 import com.example.desafio3dsm.model.Recurso
 
 /**
- * Adapter de RecyclerView para renderizar las tarjetas de Recursos Educativos con Favoritos y Calificación.
+ * Adapter de RecyclerView para renderizar las tarjetas de Recursos Educativos con Favoritos,
+ * Calificación y opciones CRUD exclusivas de Docentes.
  */
 class RecursosAdapter(
     private var listaRecursos: List<Recurso> = emptyList(),
     private var listaFavoritosIds: List<String> = emptyList(),
+    private var esDocente: Boolean = false,
     private val onFavoritoClick: ((Recurso) -> Unit)? = null,
     private val onCalificarClick: ((Recurso) -> Unit)? = null,
+    private val onEditarClick: ((Recurso) -> Unit)? = null,
+    private val onEliminarClick: ((Recurso) -> Unit)? = null,
     private val onItemClick: ((Recurso) -> Unit)? = null
 ) : RecyclerView.Adapter<RecursosAdapter.RecursoViewHolder>() {
 
@@ -33,6 +38,11 @@ class RecursosAdapter(
 
     fun actualizarFavoritos(nuevosFavoritos: List<String>) {
         listaFavoritosIds = nuevosFavoritos
+        notifyDataSetChanged()
+    }
+
+    fun actualizarModoDocente(isDocente: Boolean) {
+        esDocente = isDocente
         notifyDataSetChanged()
     }
 
@@ -58,6 +68,10 @@ class RecursosAdapter(
         private val btnCalificar: Button = itemView.findViewById(R.id.btnCalificar)
         private val btnAbrirEnlace: Button = itemView.findViewById(R.id.btnAbrirEnlace)
 
+        private val layoutDocenteAcciones: LinearLayout = itemView.findViewById(R.id.layoutDocenteAcciones)
+        private val btnEditarRecurso: Button = itemView.findViewById(R.id.btnEditarRecurso)
+        private val btnEliminarRecurso: Button = itemView.findViewById(R.id.btnEliminarRecurso)
+
         fun bind(recurso: Recurso) {
             val context = itemView.context
 
@@ -80,6 +94,13 @@ class RecursosAdapter(
             } else {
                 btnFavorito.setImageResource(android.R.drawable.btn_star_big_off)
                 btnFavorito.contentDescription = context.getString(R.string.btn_favorite_add)
+            }
+
+            // Visibilidad de Acciones Docente (Editar y Eliminar)
+            if (esDocente) {
+                layoutDocenteAcciones.visibility = View.VISIBLE
+            } else {
+                layoutDocenteAcciones.visibility = View.GONE
             }
 
             // Cargar imagen de recurso con Glide
@@ -121,6 +142,14 @@ class RecursosAdapter(
 
             btnCalificar.setOnClickListener {
                 onCalificarClick?.invoke(recurso)
+            }
+
+            btnEditarRecurso.setOnClickListener {
+                onEditarClick?.invoke(recurso)
+            }
+
+            btnEliminarRecurso.setOnClickListener {
+                onEliminarClick?.invoke(recurso)
             }
 
             itemView.setOnClickListener {

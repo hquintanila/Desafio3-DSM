@@ -10,7 +10,7 @@ import retrofit2.Response
 
 /**
  * Controlador de Recursos Educativos en arquitectura MVC.
- * Gestiona la carga de la API, el filtrado dinámico y la búsqueda.
+ * Administra las peticiones de consulta, creación (POST), edición (PUT), eliminación (DELETE) y filtrado.
  */
 class RecursosController(
     private val apiService: ApiService = NetworkClient.apiService
@@ -18,6 +18,16 @@ class RecursosController(
 
     interface RecursosCallback {
         fun onSuccess(recursos: List<Recurso>)
+        fun onError(messageResId: Int)
+    }
+
+    interface RecursoCrudCallback {
+        fun onSuccess(recurso: Recurso, messageResId: Int)
+        fun onError(messageResId: Int)
+    }
+
+    interface RecursoDeleteCallback {
+        fun onSuccess(messageResId: Int)
         fun onError(messageResId: Int)
     }
 
@@ -36,6 +46,63 @@ class RecursosController(
             }
 
             override fun onFailure(call: Call<List<Recurso>>, t: Throwable) {
+                callback.onError(R.string.error_network)
+            }
+        })
+    }
+
+    /**
+     * Crea un nuevo recurso educativo consumiendo POST /recursos en MockAPI.
+     */
+    fun crearRecurso(nuevoRecurso: Recurso, callback: RecursoCrudCallback) {
+        apiService.createRecurso(nuevoRecurso).enqueue(object : Callback<Recurso> {
+            override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
+                if (response.isSuccessful && response.body() != null) {
+                    callback.onSuccess(response.body()!!, R.string.toast_resource_created)
+                } else {
+                    callback.onError(R.string.error_create_resource)
+                }
+            }
+
+            override fun onFailure(call: Call<Recurso>, t: Throwable) {
+                callback.onError(R.string.error_network)
+            }
+        })
+    }
+
+    /**
+     * Actualiza un recurso existente consumiendo PUT /recursos/{id} en MockAPI.
+     */
+    fun actualizarRecurso(id: String, recurso: Recurso, callback: RecursoCrudCallback) {
+        apiService.updateRecurso(id, recurso).enqueue(object : Callback<Recurso> {
+            override fun onResponse(call: Call<Recurso>, response: Response<Recurso>) {
+                if (response.isSuccessful && response.body() != null) {
+                    callback.onSuccess(response.body()!!, R.string.toast_resource_updated)
+                } else {
+                    callback.onError(R.string.error_update_resource)
+                }
+            }
+
+            override fun onFailure(call: Call<Recurso>, t: Throwable) {
+                callback.onError(R.string.error_network)
+            }
+        })
+    }
+
+    /**
+     * Elimina un recurso consumiendo DELETE /recursos/{id} en MockAPI.
+     */
+    fun eliminarRecurso(id: String, callback: RecursoDeleteCallback) {
+        apiService.deleteRecurso(id).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    callback.onSuccess(R.string.toast_resource_deleted)
+                } else {
+                    callback.onError(R.string.error_delete_resource)
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
                 callback.onError(R.string.error_network)
             }
         })

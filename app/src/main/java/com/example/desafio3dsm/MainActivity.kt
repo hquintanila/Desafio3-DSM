@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -22,13 +23,14 @@ import com.example.desafio3dsm.controller.RatingController
 import com.example.desafio3dsm.controller.RecursosController
 import com.example.desafio3dsm.controller.SessionManager
 import com.example.desafio3dsm.model.Recurso
+import com.example.desafio3dsm.view.AddEditResourceActivity
 import com.example.desafio3dsm.view.LoginActivity
 import com.google.android.material.chip.ChipGroup
 
 /**
  * Pantalla Principal (MainActivity) de AprendeApp.
- * Incluye gestión de roles, listado dinámico, favoritos persistentes en API,
- * sistema de calificación con RatingBar y AlertDialogs de confirmación.
+ * Incluye gestión de roles, listado dinámico, favoritos persistentes, calificación
+ * y operaciones CRUD (Crear, Editar, Eliminar) exclusivas para el rol Docente.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -55,13 +57,21 @@ class MainActivity : AppCompatActivity() {
 
     private var currentSearchQuery: String = ""
     private var currentFilterType: String = "Todos"
+    private var isDocenteUser: Boolean = false
+
+    private val addEditResourceLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            cargarRecursos()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         sessionManager = SessionManager(this)
 
-        // 1. Verificar sesión activa
         if (!sessionManager.isLoggedIn()) {
             redirectToLogin()
             return
@@ -79,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         setupSearchAndFilters()
         setupListeners()
 
-        // 2. Cargar favoritos del usuario y recursos de la API
         cargarFavoritosYRecursos()
     }
 
@@ -101,9 +110,10 @@ class MainActivity : AppCompatActivity() {
         val userName = sessionManager.getUserName() ?: ""
         val userRole = sessionManager.getUserRole() ?: getString(R.string.text_role_student)
 
+        isDocenteUser = userRole.equals("Docente", ignoreCase = true)
         tvUserRoleBadge.text = getString(R.string.text_role_badge, userName, userRole)
 
-        if (userRole.equals("Docente", ignoreCase = true)) {
+        if (isDocenteUser) {
             layoutDocentePanel.visibility = View.VISIBLE
         } else {
             layoutDocentePanel.visibility = View.GONE
@@ -114,11 +124,18 @@ class MainActivity : AppCompatActivity() {
         recursosAdapter = RecursosAdapter(
             listaRecursos = emptyList(),
             listaFavoritosIds = listaFavoritosIds,
+            esDocente = isDocenteUser,
             onFavoritoClick = { recurso ->
                 toggleFavorito(recurso)
             },
             onCalificarClick = { recurso ->
                 mostrarDialogoCalificar(recurso)
+            },
+            onEditarClick = { recurso ->
+                abrirEditarRecurso(recurso)
+            },
+            onEliminarClick = { recurso ->
+                mostrarDialogoEliminar(recurso)
             },
             onItemClick = { recurso ->
                 Toast.makeText(this, recurso.titulo ?: getString(R.string.text_no_title), Toast.LENGTH_SHORT).show()
@@ -161,18 +178,57 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         btnLogout.setOnClickListener {
-            // AlertDialog de Confirmación para Cerrar Sesión
             mostrarDialogoCerrarSesion()
         }
 
         btnCrearRecurso.setOnClickListener {
-            Toast.makeText(this, getString(R.string.btn_create_resource), Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AddEditResourceActivity::class.java)
+            addEditResourceLauncher.launch(intent)
         }
     }
 
-    /**
-     * Carga inicial de datos: primero recupera los favoritos guardados y luego la lista de recursos.
-     */
+    private fun abrirEditarRecurso(recurso: Recurso) {
+        val intent = Intent(this, AddEditResourceActivity::class.java).apply {
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_ID, recurso.id)
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_TITULO, recurso.titulo)
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_DESCRIPCION, recurso.descripcion)
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_TIPO, recurso.tipo ?: recurso.categoria)
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_URL, recurso.url)
+            putExtra(AddEditResourceActivity.EXTRA_RECURSO_IMAGEN, recurso.imagen)
+        }
+        addEditResourceLauncher.launch(intent)
+    }
+
+    private fun mostrarDialogoEliminar(recurso: Recurso) {
+        val id = recurso.id ?: return
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.dialog_delete_title))
+            .setMessage(getString(R.string.dialog_delete_message))
+            .setPositiveButton(getString(R.string.btn_delete)) { _, _ ->
+                eliminarRecurso(id)
+            }
+            .setNegativeButton(getString(R.string.btn_cancel), null)
+            .show()
+    }
+
+    private fun eliminarRecurso(id: String) {
+        showLoading(true)
+
+        recursosController.eliminarRecurso(id, object : RecursosController.RecursoDeleteCallback {
+            override fun onSuccess(messageResId: Int) {
+                showLoading(false)
+                Toast.makeText(this@MainActivity, getString(messageResId), Toast.LENGTH_SHORT).show()
+                cargarRecursos()
+            }
+
+            override fun onError(messageResId: Int) {
+                showLoading(false)
+                Toast.makeText(this@MainActivity, getString(messageResId), Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
     private fun cargarFavoritosYRecursos() {
         showLoading(true)
         val userId = sessionManager.getUserId() ?: ""
@@ -185,7 +241,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onError(messageResId: Int) {
-                // Si falla la carga de favoritos, continuar cargando recursos
                 cargarRecursos()
             }
         })
@@ -196,6 +251,7 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(recursos: List<Recurso>) {
                 showLoading(false)
                 listaOriginalRecursos = recursos
+                recursosAdapter.actualizarModoDocente(isDocenteUser)
                 aplicarFiltros()
             }
 
@@ -208,9 +264,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /**
-     * Alterna un recurso entre favoritos y guarda la actualización en /usuarios/{id}
-     */
     private fun toggleFavorito(recurso: Recurso) {
         val userId = sessionManager.getUserId() ?: return
         val recursoId = recurso.id ?: return
@@ -236,9 +289,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /**
-     * Muestra un AlertDialog con RatingBar para calificar un recurso y actualizarlo en /recursos/{id}
-     */
     private fun mostrarDialogoCalificar(recurso: Recurso) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_calificar, null)
         val ratingBar = dialogView.findViewById<RatingBar>(R.id.ratingBar)
@@ -267,7 +317,6 @@ class MainActivity : AppCompatActivity() {
                 showLoading(false)
                 Toast.makeText(this@MainActivity, getString(messageResId), Toast.LENGTH_SHORT).show()
 
-                // Actualizar recurso en la lista local
                 listaOriginalRecursos = listaOriginalRecursos.map {
                     if (it.id == recursoActualizado.id) recursoActualizado else it
                 }
@@ -281,9 +330,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /**
-     * Muestra un AlertDialog de confirmación para cerrar sesión.
-     */
     private fun mostrarDialogoCerrarSesion() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_logout_title))
@@ -296,9 +342,6 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    /**
-     * Aplica los filtros combinados de búsqueda por texto, categoría y pestaña de favoritos.
-     */
     private fun aplicarFiltros() {
         val esFiltroFavoritos = currentFilterType == getString(R.string.filter_favorites)
 
