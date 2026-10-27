@@ -22,5 +22,8 @@ data class Usuario(
     val rol: String? = null,
 
     @SerializedName("avatar")
-    val avatar: String? = null
+    val avatar: String? = null,
+
+    @SerializedName("favoritos")
+    val favoritos: List<String>? = emptyList()
 )

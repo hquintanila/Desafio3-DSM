@@ -17,6 +17,53 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Fila Superior: Badge Tipo, Rating y Botón Favorito -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvTipoBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E3F2FD"
+                android:textColor="#1976D2"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                tools:text="Video" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvCalificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#F57C00"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                tools:text="⭐ 4.8 (12)" />
+
+            <ImageButton
+                android:id="@+id/btnFavorito"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/btn_favorite_add"
+                android:src="@android:drawable/btn_star_big_off"
+                app:tint="#F57C00" />
+
+        </LinearLayout>
+
+        <!-- Contenido Central: Imagen y Título -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,61 +80,21 @@
                 android:contentDescription="@string/app_name"
                 android:layout_marginEnd="12dp" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTitulo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/tvTipoBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#E3F2FD"
-                        android:textColor="#1976D2"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        tools:text="Video" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/tvCalificacion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#F57C00"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="⭐ 4.8 / 5.0" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvTitulo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121"
-                    android:layout_marginTop="4dp"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    tools:text="Curso de Kotlin Intermedio" />
-
-            </LinearLayout>
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:text="Curso de Kotlin Intermedio" />
 
         </LinearLayout>
 
+        <!-- Descripción Corta -->
         <TextView
             android:id="@+id/tvDescripcion"
             android:layout_width="match_parent"
@@ -99,6 +106,7 @@
             android:layout_marginBottom="12dp"
             tools:text="Aprende sobre Corrutinas, Retrofit y Kotlin DSL con ejemplos prácticos." />
 
+        <!-- Barra Inferior de Acciones: Enlace y Botón de Calificar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,6 +124,15 @@
                 android:ellipsize="end"
                 android:layout_marginEnd="8dp"
                 tools:text="https://mockapi.io/recursos/1" />
+
+            <Button
+                android:id="@+id/btnCalificar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/btn_rate"
+                android:textSize="12sp"
+                android:paddingHorizontal="8dp" />
 
             <Button
                 android:id="@+id/btnAbrirEnlace"

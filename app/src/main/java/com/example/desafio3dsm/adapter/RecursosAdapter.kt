@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,15 +16,23 @@ import com.example.desafio3dsm.R
 import com.example.desafio3dsm.model.Recurso
 
 /**
- * Adapter de RecyclerView para renderizar las tarjetas de Recursos Educativos.
+ * Adapter de RecyclerView para renderizar las tarjetas de Recursos Educativos con Favoritos y Calificación.
  */
 class RecursosAdapter(
     private var listaRecursos: List<Recurso> = emptyList(),
+    private var listaFavoritosIds: List<String> = emptyList(),
+    private val onFavoritoClick: ((Recurso) -> Unit)? = null,
+    private val onCalificarClick: ((Recurso) -> Unit)? = null,
     private val onItemClick: ((Recurso) -> Unit)? = null
 ) : RecyclerView.Adapter<RecursosAdapter.RecursoViewHolder>() {
 
     fun actualizarLista(nuevaLista: List<Recurso>) {
         listaRecursos = nuevaLista
+        notifyDataSetChanged()
+    }
+
+    fun actualizarFavoritos(nuevosFavoritos: List<String>) {
+        listaFavoritosIds = nuevosFavoritos
         notifyDataSetChanged()
     }
 
@@ -42,9 +51,11 @@ class RecursosAdapter(
         private val ivImagenRecurso: ImageView = itemView.findViewById(R.id.ivImagenRecurso)
         private val tvTipoBadge: TextView = itemView.findViewById(R.id.tvTipoBadge)
         private val tvCalificacion: TextView = itemView.findViewById(R.id.tvCalificacion)
+        private val btnFavorito: ImageButton = itemView.findViewById(R.id.btnFavorito)
         private val tvTitulo: TextView = itemView.findViewById(R.id.tvTitulo)
         private val tvDescripcion: TextView = itemView.findViewById(R.id.tvDescripcion)
         private val tvUrl: TextView = itemView.findViewById(R.id.tvUrl)
+        private val btnCalificar: Button = itemView.findViewById(R.id.btnCalificar)
         private val btnAbrirEnlace: Button = itemView.findViewById(R.id.btnAbrirEnlace)
 
         fun bind(recurso: Recurso) {
@@ -55,8 +66,21 @@ class RecursosAdapter(
             tvTipoBadge.text = recurso.tipo ?: recurso.categoria ?: context.getString(R.string.filter_all)
             tvUrl.text = recurso.url ?: context.getString(R.string.text_no_url)
 
-            val calif = recurso.calificacion ?: 4.5
-            tvCalificacion.text = context.getString(R.string.rating_format, calif)
+            val rating = recurso.obtenerCalificacionPromedio()
+            val totalVotos = recurso.obtenerTotalVotos()
+            tvCalificacion.text = context.getString(R.string.rating_format_with_count, rating, totalVotos)
+
+            // Estado de Favorito
+            val recursoId = recurso.id ?: ""
+            val esFavorito = listaFavoritosIds.contains(recursoId)
+
+            if (esFavorito) {
+                btnFavorito.setImageResource(android.R.drawable.btn_star_big_on)
+                btnFavorito.contentDescription = context.getString(R.string.btn_favorite_remove)
+            } else {
+                btnFavorito.setImageResource(android.R.drawable.btn_star_big_off)
+                btnFavorito.contentDescription = context.getString(R.string.btn_favorite_add)
+            }
 
             // Cargar imagen de recurso con Glide
             val imgUrl = recurso.imagen
@@ -70,6 +94,7 @@ class RecursosAdapter(
                 ivImagenRecurso.setImageResource(R.drawable.ic_launcher_background)
             }
 
+            // Acción Abrir Enlace
             val openUrlAction = View.OnClickListener {
                 val urlStr = recurso.url
                 if (!urlStr.isNullOrEmpty()) {
@@ -89,6 +114,14 @@ class RecursosAdapter(
 
             btnAbrirEnlace.setOnClickListener(openUrlAction)
             tvUrl.setOnClickListener(openUrlAction)
+
+            btnFavorito.setOnClickListener {
+                onFavoritoClick?.invoke(recurso)
+            }
+
+            btnCalificar.setOnClickListener {
+                onCalificarClick?.invoke(recurso)
+            }
 
             itemView.setOnClickListener {
                 onItemClick?.invoke(recurso)

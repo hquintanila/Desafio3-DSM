@@ -28,5 +28,19 @@ data class Recurso(
     val imagen: String? = null,
 
     @SerializedName("calificacion")
-    val calificacion: Double? = null
-)
+    val calificacion: Double? = null,
+
+    @SerializedName("calificacionPromedio")
+    val calificacionPromedio: Double? = null,
+
+    @SerializedName("totalCalificaciones")
+    val totalCalificaciones: Int? = null
+) {
+    fun obtenerCalificacionPromedio(): Double {
+        return calificacionPromedio ?: calificacion ?: 0.0
+    }
+
+    fun obtenerTotalVotos(): Int {
+        return totalCalificaciones ?: 1
+    }
+}
