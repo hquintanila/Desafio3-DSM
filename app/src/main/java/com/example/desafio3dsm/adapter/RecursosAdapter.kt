@@ -1,6 +1,8 @@
 package com.example.desafio3dsm.adapter
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.desafio3dsm.R
@@ -84,15 +87,17 @@ class RecursosAdapter(
             val totalVotos = recurso.obtenerTotalVotos()
             tvCalificacion.text = context.getString(R.string.rating_format_with_count, rating, totalVotos)
 
-            // Estado de Favorito
+            // Estado de Favorito con tintes claros: Gris si no está seleccionado, Naranja brillante si es favorito
             val recursoId = recurso.id ?: ""
             val esFavorito = listaFavoritosIds.contains(recursoId)
 
             if (esFavorito) {
                 btnFavorito.setImageResource(android.R.drawable.btn_star_big_on)
+                ImageViewCompat.setImageTintList(btnFavorito, ColorStateList.valueOf(Color.parseColor("#F57C00")))
                 btnFavorito.contentDescription = context.getString(R.string.btn_favorite_remove)
             } else {
                 btnFavorito.setImageResource(android.R.drawable.btn_star_big_off)
+                ImageViewCompat.setImageTintList(btnFavorito, ColorStateList.valueOf(Color.parseColor("#9E9E9E")))
                 btnFavorito.contentDescription = context.getString(R.string.btn_favorite_add)
             }
 
@@ -105,9 +110,16 @@ class RecursosAdapter(
                 btnEliminarRecurso.visibility = View.GONE
             }
 
-            // Cargar imagen de recurso con Glide
-            val imgUrl = recurso.imagen
-            if (!imgUrl.isNullOrEmpty()) {
+            // Cargar imagen de recurso (Soporte para ad1, ap2, mv3 y URLs dinámicas)
+            val rawImg = recurso.imagen ?: ""
+            val imgUrl = when {
+                rawImg.contains("ad1", ignoreCase = true) || recurso.id == "1" -> "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400"
+                rawImg.contains("ap2", ignoreCase = true) || recurso.id == "2" -> "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400"
+                rawImg.contains("mv3", ignoreCase = true) || recurso.id == "3" -> "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400"
+                else -> rawImg
+            }
+
+            if (imgUrl.isNotEmpty()) {
                 Glide.with(context)
                     .load(imgUrl)
                     .placeholder(R.drawable.ic_launcher_background)

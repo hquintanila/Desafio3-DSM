@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
@@ -22,6 +23,7 @@ import com.example.desafio3dsm.model.Recurso
 class AddEditResourceActivity : AppCompatActivity() {
 
     private lateinit var tvFormTitle: TextView
+    private lateinit var btnCloseForm: ImageButton
     private lateinit var etTitulo: EditText
     private lateinit var etDescripcion: EditText
     private lateinit var spTipo: Spinner
@@ -68,6 +70,7 @@ class AddEditResourceActivity : AppCompatActivity() {
 
     private fun initViews() {
         tvFormTitle = findViewById(R.id.tvFormTitle)
+        btnCloseForm = findViewById(R.id.btnCloseForm)
         etTitulo = findViewById(R.id.etTitulo)
         etDescripcion = findViewById(R.id.etDescripcion)
         spTipo = findViewById(R.id.spTipo)
@@ -117,6 +120,10 @@ class AddEditResourceActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        btnCloseForm.setOnClickListener {
+            finish()
+        }
+
         btnGaleria.setOnClickListener {
             galleryLauncher.launch("image/*")
         }
@@ -178,6 +185,7 @@ class AddEditResourceActivity : AppCompatActivity() {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         btnGuardarRecurso.isEnabled = !isLoading
         btnGaleria.isEnabled = !isLoading
+        btnCloseForm.isEnabled = !isLoading
     }
 
     private fun showError(message: String) {
