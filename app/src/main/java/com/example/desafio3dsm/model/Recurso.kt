@@ -22,5 +22,11 @@ data class Recurso(
     val url: String? = null,
 
     @SerializedName("categoria")
-    val categoria: String? = null
+    val categoria: String? = null,
+
+    @SerializedName("imagen")
+    val imagen: String? = null,
+
+    @SerializedName("calificacion")
+    val calificacion: Double? = null
 )

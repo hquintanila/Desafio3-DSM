@@ -24,29 +24,49 @@
     <string name="hint_password">Contraseña</string>
     <string name="hint_confirm_password">Confirmar contraseña</string>
     <string name="label_role">Selecciona tu rol:</string>
+    <string name="hint_search_resources">Buscar recursos por título o contenido...</string>
 
-    <!-- Arreglo de Roles -->
+    <!-- Arreglo de Roles para el Spinner -->
     <string-array name="roles_array">
         <item>Estudiante</item>
         <item>Docente</item>
     </string-array>
 
+    <!-- Filtros por Tipo de Recurso -->
+    <string name="filter_all">Todos</string>
+    <string name="filter_book">Libro</string>
+    <string name="filter_video">Video</string>
+    <string name="filter_article">Artículo</string>
+
+    <!-- Información de Usuario y Gestión de Roles -->
+    <string name="text_role_badge">Usuario: %1$s | Rol: %2$s</string>
+    <string name="text_role_student">Estudiante</string>
+    <string name="text_role_teacher">Docente</string>
+    <string name="text_teacher_mode">Modo Docente: Gestión y Publicación de Recursos Activa</string>
+
+    <!-- Textos de Recursos -->
+    <string name="text_no_title">Sin título</string>
+    <string name="text_no_description">Sin descripción disponible</string>
+    <string name="text_no_url">Sin enlace disponible</string>
+    <string name="rating_format">⭐ %1$.1f / 5.0</string>
+
     <!-- Mensajes de Bienvenida y Estado -->
     <string name="welcome_message">Bienvenido a la plataforma educativa AprendeApp. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
-    <string name="welcome_subtitle">Tu portal de conocimiento y aprendizaje continuo</string>
-    <string name="loading_data">Cargando datos, por favor espere...</string>
+    <string name="loading_data">Cargando recursos educativos...</string>
     <string name="empty_users_list">No hay usuarios registrados actualmente.</string>
-    <string name="empty_resources_list">No hay recursos educativos disponibles.</string>
+    <string name="empty_resources_list">No se encontraron recursos educativos.</string>
     <string name="success_save">Guardado correctamente.</string>
     <string name="success_delete">Eliminado correctamente.</string>
     <string name="success_register">Usuario registrado exitosamente. Ahora puedes iniciar sesión.</string>
     <string name="success_login">¡Bienvenido a AprendeApp!</string>
     <string name="logged_in_info">Sesión activa:\nUsuario: %1$s\nEmail: %2$s\nRol: %3$s (ID: %4$s)</string>
 
-    <!-- Etiquetas de Botones y Enlaces -->
+    <!-- Etiquetas de Botones -->
     <string name="btn_login">Iniciar Sesión</string>
     <string name="btn_register">Registrarse</string>
     <string name="btn_logout">Cerrar Sesión</string>
+    <string name="btn_create_resource">+ Crear Recurso</string>
+    <string name="btn_open_link">Abrir enlace</string>
     <string name="btn_go_to_register">¿No tienes una cuenta? Regístrate aquí</string>
     <string name="btn_go_to_login">¿Ya tienes una cuenta? Inicia sesión</string>
     <string name="btn_save">Guardar</string>
@@ -73,4 +93,5 @@
     <string name="error_user_not_found">Usuario no encontrado o contraseña incorrecta.</string>
     <string name="error_email_already_registered">El correo electrónico ya se encuentra registrado.</string>
     <string name="error_register_failed">Error al registrar el usuario. Inténtalo de nuevo.</string>
+    <string name="error_invalid_url">No se pudo abrir el enlace especificado.</string>
 </resources>
