@@ -1,3 +1,50 @@
 <resources>
-    <string name="app_name">Desafio3DSM</string>
+    <!-- Nombre de la aplicación -->
+    <string name="app_name">AprendeApp</string>
+
+    <!-- Títulos de Pantalla y Secciones -->
+    <string name="title_main">AprendeApp - Inicio</string>
+    <string name="title_welcome">¡Bienvenido a AprendeApp!</string>
+
+    <string name="title_usuarios">Lista de Usuarios</string>
+    <string name="title_usuario_detalle">Detalle de Usuario</string>
+    <string name="title_usuario_crear">Crear Usuario</string>
+    <string name="title_usuario_editar">Editar Usuario</string>
+
+    <string name="title_recursos">Recursos Educativos</string>
+    <string name="title_recurso_detalle">Detalle de Recurso</string>
+    <string name="title_recurso_crear">Crear Recurso</string>
+    <string name="title_recurso_editar">Editar Recurso</string>
+
+    <!-- Mensajes de Bienvenida y Estado -->
+    <string name="welcome_message">Bienvenido a la plataforma educativa AprendeApp. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
+    <string name="welcome_subtitle">Tu portal de conocimiento y aprendizaje continuo</string>
+    <string name="loading_data">Cargando datos, por favor espere...</string>
+    <string name="empty_users_list">No hay usuarios registrados actualmente.</string>
+    <string name="empty_resources_list">No hay recursos educativos disponibles.</string>
+    <string name="success_save">Guardado correctamente.</string>
+    <string name="success_delete">Eliminado correctamente.</string>
+
+    <!-- Etiquetas de Botones -->
+    <string name="btn_login">Iniciar Sesión</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_delete">Eliminar</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_retry">Reintentar</string>
+    <string name="btn_load_users">Cargar Usuarios</string>
+    <string name="btn_load_resources">Cargar Recursos</string>
+    <string name="btn_view_details">Ver Detalles</string>
+    <string name="btn_accept">Aceptar</string>
+
+    <!-- Mensajes de Error -->
+    <string name="error_network">Error de conexión a Internet. Por favor, verifica tu red.</string>
+    <string name="error_server">Error en el servidor. Inténtalo más tarde.</string>
+    <string name="error_unknown">Ha ocurrido un error inesperado.</string>
+    <string name="error_loading_users">No se pudieron cargar los usuarios.</string>
+    <string name="error_loading_resources">No se pudieron cargar los recursos educativos.</string>
+    <string name="error_empty_fields">Por favor, completa todos los campos requeridos.</string>
+    <string name="error_invalid_email">Ingresa un correo electrónico válido.</string>
+    <string name="error_invalid_password">La contraseña ingresada no es correcta.</string>
 </resources>
