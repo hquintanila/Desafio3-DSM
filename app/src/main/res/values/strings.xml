@@ -5,6 +5,8 @@
     <!-- Títulos de Pantalla y Secciones -->
     <string name="title_main">AprendeApp - Inicio</string>
     <string name="title_welcome">¡Bienvenido a AprendeApp!</string>
+    <string name="title_login">Iniciar Sesión</string>
+    <string name="title_register">Registro de Usuario</string>
 
     <string name="title_usuarios">Lista de Usuarios</string>
     <string name="title_usuario_detalle">Detalle de Usuario</string>
@@ -16,6 +18,19 @@
     <string name="title_recurso_crear">Crear Recurso</string>
     <string name="title_recurso_editar">Editar Recurso</string>
 
+    <!-- Campos de Entrada e Insinuaciones (Hints) -->
+    <string name="hint_nombre">Nombre completo</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_confirm_password">Confirmar contraseña</string>
+    <string name="label_role">Selecciona tu rol:</string>
+
+    <!-- Arreglo de Roles -->
+    <string-array name="roles_array">
+        <item>Estudiante</item>
+        <item>Docente</item>
+    </string-array>
+
     <!-- Mensajes de Bienvenida y Estado -->
     <string name="welcome_message">Bienvenido a la plataforma educativa AprendeApp. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
     <string name="welcome_subtitle">Tu portal de conocimiento y aprendizaje continuo</string>
@@ -24,10 +39,16 @@
     <string name="empty_resources_list">No hay recursos educativos disponibles.</string>
     <string name="success_save">Guardado correctamente.</string>
     <string name="success_delete">Eliminado correctamente.</string>
+    <string name="success_register">Usuario registrado exitosamente. Ahora puedes iniciar sesión.</string>
+    <string name="success_login">¡Bienvenido a AprendeApp!</string>
+    <string name="logged_in_info">Sesión activa:\nUsuario: %1$s\nEmail: %2$s\nRol: %3$s (ID: %4$s)</string>
 
-    <!-- Etiquetas de Botones -->
+    <!-- Etiquetas de Botones y Enlaces -->
     <string name="btn_login">Iniciar Sesión</string>
     <string name="btn_register">Registrarse</string>
+    <string name="btn_logout">Cerrar Sesión</string>
+    <string name="btn_go_to_register">¿No tienes una cuenta? Regístrate aquí</string>
+    <string name="btn_go_to_login">¿Ya tienes una cuenta? Inicia sesión</string>
     <string name="btn_save">Guardar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_delete">Eliminar</string>
@@ -38,7 +59,7 @@
     <string name="btn_view_details">Ver Detalles</string>
     <string name="btn_accept">Aceptar</string>
 
-    <!-- Mensajes de Error -->
+    <!-- Mensajes de Error y Validación -->
     <string name="error_network">Error de conexión a Internet. Por favor, verifica tu red.</string>
     <string name="error_server">Error en el servidor. Inténtalo más tarde.</string>
     <string name="error_unknown">Ha ocurrido un error inesperado.</string>
@@ -47,4 +68,9 @@
     <string name="error_empty_fields">Por favor, completa todos los campos requeridos.</string>
     <string name="error_invalid_email">Ingresa un correo electrónico válido.</string>
     <string name="error_invalid_password">La contraseña ingresada no es correcta.</string>
+    <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
+    <string name="error_password_requirements">La contraseña debe tener al menos 12 caracteres, incluir al menos una letra mayúscula, una minúscula, un número y un carácter especial (!@#$%^&amp;*).</string>
+    <string name="error_user_not_found">Usuario no encontrado o contraseña incorrecta.</string>
+    <string name="error_email_already_registered">El correo electrónico ya se encuentra registrado.</string>
+    <string name="error_register_failed">Error al registrar el usuario. Inténtalo de nuevo.</string>
 </resources>
