@@ -4,9 +4,11 @@
 
     <!-- Títulos de Pantalla y Secciones -->
     <string name="title_main">ConectaEduc - Inicio</string>
-    <string name="title_welcome">¡Bienvenido a AprendeApp!</string>
+    <string name="title_welcome">¡Bienvenido a ConectaEduc!</string>
     <string name="title_login">Iniciar Sesión</string>
     <string name="title_register">Registro de Usuario</string>
+    <string name="title_profile">Perfil de Usuario</string>
+    <string name="title_change_password">Cambiar Contraseña</string>
 
     <string name="title_usuarios">Lista de Usuarios</string>
     <string name="title_usuario_detalle">Detalle de Usuario</string>
@@ -17,7 +19,6 @@
     <string name="title_recurso_detalle">Detalle de Recurso</string>
     <string name="title_recurso_crear">Crear Recurso Educativo</string>
     <string name="title_recurso_editar">Editar Recurso Educativo</string>
-    <string name="title_profile">Perfil de Usuario</string>
 
     <!-- Campos de Entrada e Insinuaciones (Hints) -->
     <string name="hint_nombre">Nombre completo</string>
@@ -27,6 +28,8 @@
     <string name="label_role">Selecciona tu rol:</string>
     <string name="hint_search_resources">Buscar recursos por título o contenido...</string>
     <string name="label_category">Categoría: %1$s</string>
+    <string name="hint_new_password">Nueva contraseña *</string>
+    <string name="hint_confirm_new_password">Confirmar nueva contraseña *</string>
 
     <!-- Campos del Formulario de Recurso -->
     <string name="hint_resource_title">Título del recurso *</string>
@@ -59,6 +62,7 @@
     <string name="text_role_student">Estudiante</string>
     <string name="text_role_teacher">Docente</string>
     <string name="text_teacher_mode">Modo Docente: Gestión y Publicación de Recursos Activa</string>
+    <string name="profile_info">Nombre: %1$s\nCorreo: %2$s\nRol: %3$s\nÚltimo acceso: %4$s</string>
 
     <!-- Textos de Recursos y Calificaciones -->
     <string name="text_no_title">Sin título</string>
@@ -90,9 +94,10 @@
     <string name="toast_resource_created">Recurso creado exitosamente.</string>
     <string name="toast_resource_updated">Recurso actualizado exitosamente.</string>
     <string name="toast_resource_deleted">Recurso eliminado exitosamente.</string>
+    <string name="toast_password_changed">Contraseña actualizada exitosamente.</string>
 
     <!-- Mensajes de Bienvenida y Estado -->
-    <string name="welcome_message">Bienvenido a la plataforma educativa AprendeApp. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
+    <string name="welcome_message">Bienvenido a la plataforma educativa ConectaEduc. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
     <string name="loading_data">Cargando recursos educativos...</string>
     <string name="updating_data">Actualizando datos en el servidor...</string>
     <string name="empty_users_list">No hay usuarios registrados actualmente.</string>
@@ -101,9 +106,8 @@
     <string name="success_save">Guardado correctamente.</string>
     <string name="success_delete">Eliminado correctamente.</string>
     <string name="success_register">Usuario registrado exitosamente. Ahora puedes iniciar sesión.</string>
-    <string name="success_login">¡Bienvenido a AprendeApp!</string>
+    <string name="success_login">¡Bienvenido a ConectaEduc!</string>
     <string name="logged_in_info">Sesión activa:\nUsuario: %1$s\nEmail: %2$s\nRol: %3$s (ID: %4$s)</string>
-    <string name="profile_info">Nombre: %1$s\nCorreo: %2$s\nRol: %3$s</string>
 
     <!-- Etiquetas de Botones -->
     <string name="btn_login">Iniciar Sesión</string>
@@ -112,6 +116,8 @@
     <string name="btn_create_resource">+ Crear Recurso</string>
     <string name="btn_save_resource">Guardar Recurso</string>
     <string name="btn_open_link">Abrir enlace</string>
+    <string name="btn_profile">Perfil</string>
+    <string name="btn_change_password">Cambiar contraseña</string>
     <string name="btn_go_to_register">¿No tienes una cuenta? Regístrate aquí</string>
     <string name="btn_go_to_login">¿Ya tienes una cuenta? Inicia sesión</string>
     <string name="btn_save">Guardar</string>
@@ -145,4 +151,5 @@
     <string name="error_create_resource">Error al crear el recurso educativo.</string>
     <string name="error_update_resource">Error al actualizar el recurso educativo.</string>
     <string name="error_delete_resource">Error al eliminar el recurso educativo.</string>
+    <string name="error_update_password">No se pudo actualizar la contraseña.</string>
 </resources>

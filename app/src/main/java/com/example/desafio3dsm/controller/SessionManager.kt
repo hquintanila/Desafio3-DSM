@@ -3,6 +3,9 @@ package com.example.desafio3dsm.controller
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.desafio3dsm.model.Usuario
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Controlador de Sesión que administra SharedPreferences para la persistencia del usuario activo.
@@ -18,6 +21,7 @@ class SessionManager(context: Context) {
         private const val KEY_USER_EMAIL = "userEmail"
         private const val KEY_USER_ROLE = "userRole"
         private const val KEY_USER_NAME = "userName"
+        private const val KEY_LAST_LOGIN = "lastLoginTime"
     }
 
     /**
@@ -30,6 +34,7 @@ class SessionManager(context: Context) {
         editor.putString(KEY_USER_EMAIL, email)
         editor.putString(KEY_USER_ROLE, rol)
         editor.putString(KEY_USER_NAME, nombre ?: "")
+        editor.putLong(KEY_LAST_LOGIN, System.currentTimeMillis())
         editor.apply()
     }
 
@@ -44,6 +49,12 @@ class SessionManager(context: Context) {
     fun getUserEmail(): String? = prefs.getString(KEY_USER_EMAIL, null)
     fun getUserRole(): String? = prefs.getString(KEY_USER_ROLE, null)
     fun getUserName(): String? = prefs.getString(KEY_USER_NAME, null)
+
+    fun getLastLoginTime(): String {
+        val timestamp = prefs.getLong(KEY_LAST_LOGIN, System.currentTimeMillis())
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return sdf.format(Date(timestamp))
+    }
 
     /**
      * Devuelve el objeto Usuario de la sesión activa o null si no está autenticado.

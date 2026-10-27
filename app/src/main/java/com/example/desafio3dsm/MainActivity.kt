@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -17,14 +18,20 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.desafio3dsm.adapter.RecursosAdapter
+import com.example.desafio3dsm.controller.AuthController
 import com.example.desafio3dsm.controller.FavoritosController
 import com.example.desafio3dsm.controller.RatingController
 import com.example.desafio3dsm.controller.RecursosController
 import com.example.desafio3dsm.controller.SessionManager
 import com.example.desafio3dsm.model.Recurso
+import com.example.desafio3dsm.model.Usuario
+import com.example.desafio3dsm.network.NetworkClient
 import com.example.desafio3dsm.view.AddEditResourceActivity
 import com.example.desafio3dsm.view.LoginActivity
 import com.google.android.material.chip.ChipGroup
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * Pantalla Principal (MainActivity) de AprendeApp.
@@ -37,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recursosController: RecursosController
     private lateinit var favoritosController: FavoritosController
     private lateinit var ratingController: RatingController
+    private lateinit var authController: AuthController
 
     private lateinit var tvUserRoleBadge: TextView
     private lateinit var tvProfileAvatar: TextView
@@ -81,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         recursosController = RecursosController()
         favoritosController = FavoritosController()
         ratingController = RatingController()
+        authController = AuthController()
 
         initViews()
         setupRoleManagement()
@@ -201,19 +210,26 @@ class MainActivity : AppCompatActivity() {
         val name = sessionManager.getUserName() ?: "Usuario"
         val email = sessionManager.getUserEmail() ?: ""
         val role = sessionManager.getUserRole() ?: "Estudiante"
+        val lastLogin = sessionManager.getLastLoginTime()
         val initials = obtenerIniciales(name)
 
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_perfil, null)
         val tvAvatar = dialogView.findViewById<TextView>(R.id.tvDialogAvatar)
         val tvInfo = dialogView.findViewById<TextView>(R.id.tvDialogInfo)
+        val btnCambiarPass = dialogView.findViewById<Button>(R.id.btnCambiarPassword)
         val btnLogoutDialog = dialogView.findViewById<Button>(R.id.btnDialogLogout)
 
         tvAvatar.text = initials
-        tvInfo.text = getString(R.string.profile_info, name, email, role)
+        tvInfo.text = getString(R.string.profile_info, name, email, role, lastLogin)
 
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+
+        btnCambiarPass.setOnClickListener {
+            dialog.dismiss()
+            mostrarDialogoCambiarPassword()
+        }
 
         btnLogoutDialog.setOnClickListener {
             dialog.dismiss()
@@ -221,6 +237,79 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.show()
+    }
+
+    private fun mostrarDialogoCambiarPassword() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_cambiar_password, null)
+        val etNewPass = dialogView.findViewById<EditText>(R.id.etNewPassword)
+        val etConfirmPass = dialogView.findViewById<EditText>(R.id.etConfirmNewPassword)
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.title_change_password))
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.btn_save)) { dialog, _ ->
+                val newPass = etNewPass.text.toString().trim()
+                val confirmPass = etConfirmPass.text.toString().trim()
+
+                if (newPass.isEmpty() || confirmPass.isEmpty()) {
+                    Toast.makeText(this, getString(R.string.error_empty_fields), Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                if (newPass != confirmPass) {
+                    Toast.makeText(this, getString(R.string.error_password_mismatch), Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                if (!authController.isPasswordValid(newPass)) {
+                    Toast.makeText(this, getString(R.string.error_password_requirements), Toast.LENGTH_LONG).show()
+                    return@setPositiveButton
+                }
+
+                actualizarPasswordEnApi(newPass)
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.btn_cancel), null)
+            .create()
+            .show()
+    }
+
+    private fun actualizarPasswordEnApi(nuevaClave: String) {
+        showLoading(true)
+        val userId = sessionManager.getUserId() ?: return
+
+        NetworkClient.apiService.getUsuarioById(userId).enqueue(object : Callback<Usuario> {
+            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val usuario = response.body()!!
+                    val usuarioActualizado = usuario.copy(clave = nuevaClave)
+
+                    NetworkClient.apiService.updateUsuario(userId, usuarioActualizado).enqueue(object : Callback<Usuario> {
+                        override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                            showLoading(false)
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@MainActivity, getString(R.string.toast_password_changed), Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@MainActivity, getString(R.string.error_update_password), Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                            showLoading(false)
+                            Toast.makeText(this@MainActivity, getString(R.string.error_network), Toast.LENGTH_LONG).show()
+                        }
+                    })
+                } else {
+                    showLoading(false)
+                    Toast.makeText(this@MainActivity, getString(R.string.error_server), Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                showLoading(false)
+                Toast.makeText(this@MainActivity, getString(R.string.error_network), Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun abrirEditarRecurso(recurso: Recurso) {

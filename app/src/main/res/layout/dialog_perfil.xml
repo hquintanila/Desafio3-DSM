@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@android:color/white">
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,11 +35,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:textColor="#424242"
+        android:textColor="#212121"
         android:gravity="center"
         android:lineSpacingExtra="6dp"
         android:layout_marginBottom="24dp"
-        tools:text="Nombre: Harold Docente\nCorreo: hquintanila@gmail.com\nRol: Docente" />
+        tools:text="Nombre: Harold Docente\nCorreo: hquintanila@gmail.com\nRol: Docente\nÚltimo acceso: 27/10/2026 14:30" />
+
+    <Button
+        android:id="@+id/btnCambiarPassword"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/btn_change_password"
+        android:textColor="@color/orange_primary"
+        app:strokeColor="@color/orange_primary"
+        app:strokeWidth="1dp"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/btnDialogLogout"

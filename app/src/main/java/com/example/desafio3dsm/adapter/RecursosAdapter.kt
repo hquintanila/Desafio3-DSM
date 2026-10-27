@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -68,7 +67,6 @@ class RecursosAdapter(
         private val btnCalificar: Button = itemView.findViewById(R.id.btnCalificar)
         private val btnAbrirEnlace: Button = itemView.findViewById(R.id.btnAbrirEnlace)
 
-        private val layoutDocenteAcciones: LinearLayout = itemView.findViewById(R.id.layoutDocenteAcciones)
         private val btnEditarRecurso: Button = itemView.findViewById(R.id.btnEditarRecurso)
         private val btnEliminarRecurso: Button = itemView.findViewById(R.id.btnEliminarRecurso)
 
@@ -98,11 +96,13 @@ class RecursosAdapter(
                 btnFavorito.contentDescription = context.getString(R.string.btn_favorite_add)
             }
 
-            // Visibilidad de Acciones Docente (Editar y Eliminar)
+            // Visibilidad de Botones Docente (Editar y Eliminar)
             if (esDocente) {
-                layoutDocenteAcciones.visibility = View.VISIBLE
+                btnEditarRecurso.visibility = View.VISIBLE
+                btnEliminarRecurso.visibility = View.VISIBLE
             } else {
-                layoutDocenteAcciones.visibility = View.GONE
+                btnEditarRecurso.visibility = View.GONE
+                btnEliminarRecurso.visibility = View.GONE
             }
 
             // Cargar imagen de recurso con Glide

@@ -18,74 +18,65 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Fila Superior: Badge Tipo, Rating y Botón Favorito -->
+        <!-- Fila Principal: Imagen Grande a la Izquierda y Textos a la Derecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/tvTipoBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#E3F2FD"
-                android:textColor="#1976D2"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                tools:text="Video" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/tvCalificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#F57C00"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="8dp"
-                tools:text="⭐ 4.8 (12)" />
-
-            <ImageButton
-                android:id="@+id/btnFavorito"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/btn_favorite_add"
-                android:src="@android:drawable/btn_star_big_off"
-                app:tint="#9E9E9E" />
-
-        </LinearLayout>
-
-        <!-- Contenido Central: Imagen, Categoría y Título -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
+            <!-- Imagen Grande (96dp x 96dp) -->
             <ImageView
                 android:id="@+id/ivImagenRecurso"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:scaleType="centerCrop"
                 android:background="#EAEAEA"
                 android:contentDescription="@string/app_name"
                 android:layout_marginEnd="12dp" />
 
+            <!-- Contenido de Texto a la Derecha -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:id="@+id/tvTipoBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#E3F2FD"
+                        android:textColor="#1976D2"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        tools:text="Video" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvCalificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#F57C00"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        tools:text="⭐ 4.8 (12)" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvCategoria"
@@ -104,63 +95,69 @@
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:textColor="#212121"
+                    android:layout_marginBottom="4dp"
                     android:maxLines="2"
                     android:ellipsize="end"
                     tools:text="Curso de Kotlin Intermedio" />
+
+                <TextView
+                    android:id="@+id/tvDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#616161"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    tools:text="Aprende sobre Corrutinas, Retrofit y Kotlin DSL con ejemplos prácticos." />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Descripción Corta -->
-        <TextView
-            android:id="@+id/tvDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#616161"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_marginBottom="12dp"
-            tools:text="Aprende sobre Corrutinas, Retrofit y Kotlin DSL con ejemplos prácticos." />
-
-        <!-- Barra Inferior de Acciones: Calificar y Abrir Enlace -->
+        <!-- Fila de Favorito alineada a la derecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="end"
-            android:layout_marginBottom="4dp">
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btnFavorito"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/btn_favorite_add"
+                android:src="@android:drawable/btn_star_big_off"
+                app:tint="#9E9E9E" />
+
+        </LinearLayout>
+
+        <!-- Barra Inferior Unificada: Calificar, Abrir Enlace, Editar y Eliminar juntos -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="4dp">
 
             <Button
                 android:id="@+id/btnCalificar"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="36dp"
                 android:text="@string/btn_rate"
                 android:textSize="12sp"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="4dp" />
 
             <Button
                 android:id="@+id/btnAbrirEnlace"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="36dp"
                 android:text="@string/btn_open_link"
                 android:textSize="12sp"
-                android:paddingHorizontal="12dp" />
-
-        </LinearLayout>
-
-        <!-- Panel Exclusivo para Docentes (Editar y Eliminar Recurso) -->
-        <LinearLayout
-            android:id="@+id/layoutDocenteAcciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:visibility="gone"
-            tools:visibility="visible">
+                android:paddingHorizontal="4dp" />
 
             <Button
                 android:id="@+id/btnEditarRecurso"
@@ -170,7 +167,9 @@
                 android:text="@string/btn_edit"
                 android:textColor="#1565C0"
                 android:textSize="12sp"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="4dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <Button
                 android:id="@+id/btnEliminarRecurso"
@@ -180,7 +179,9 @@
                 android:text="@string/btn_delete"
                 android:textColor="#C62828"
                 android:textSize="12sp"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="4dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
