@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@android:color/white"
     android:padding="24dp"
     tools:context=".view.AddEditResourceActivity">
 
@@ -20,7 +21,7 @@
             android:text="@string/title_recurso_crear"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="@color/orange_primary"
             android:layout_marginBottom="24dp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -29,12 +30,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="@string/hint_resource_title">
+            android:hint="@string/hint_resource_title"
+            android:textColorHint="#616161"
+            app:boxStrokeColor="@color/orange_primary"
+            app:hintTextColor="@color/orange_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#212121"
+                android:textSize="16sp"
                 android:inputType="textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -45,12 +51,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="@string/hint_resource_description">
+            android:hint="@string/hint_resource_description"
+            android:textColorHint="#616161"
+            app:boxStrokeColor="@color/orange_primary"
+            app:hintTextColor="@color/orange_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#212121"
+                android:textSize="16sp"
                 android:inputType="textMultiLine"
                 android:minLines="3"
                 android:gravity="top" />
@@ -64,6 +75,7 @@
             android:text="@string/label_resource_type"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:textColor="#212121"
             android:layout_marginBottom="4dp" />
 
         <Spinner
@@ -80,12 +92,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="@string/hint_resource_url">
+            android:hint="@string/hint_resource_url"
+            android:textColorHint="#616161"
+            app:boxStrokeColor="@color/orange_primary"
+            app:hintTextColor="@color/orange_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUrl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#212121"
+                android:textSize="16sp"
                 android:inputType="textUri" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -95,23 +112,44 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:hint="@string/hint_resource_image_url">
+            android:layout_marginBottom="12dp"
+            android:hint="@string/hint_resource_image_url"
+            android:textColorHint="#616161"
+            app:boxStrokeColor="@color/orange_primary"
+            app:hintTextColor="@color/orange_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etImagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#212121"
+                android:textSize="16sp"
                 android:inputType="textUri" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón para seleccionar de la galería -->
+        <Button
+            android:id="@+id/btnGaleria"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/btn_pick_gallery"
+            android:textColor="@color/orange_primary"
+            app:strokeColor="@color/orange_primary"
+            app:strokeWidth="1dp"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
 
         <Button
             android:id="@+id/btnGuardarRecurso"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="@string/btn_save_resource"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/orange_primary"
             android:layout_marginBottom="16dp" />
 
         <ProgressBar
@@ -119,6 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/orange_primary"
             android:visibility="gone" />
 
     </LinearLayout>

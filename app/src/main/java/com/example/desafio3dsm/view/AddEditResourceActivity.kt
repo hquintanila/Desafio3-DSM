@@ -1,5 +1,6 @@
 package com.example.desafio3dsm.view
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -9,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.desafio3dsm.R
 import com.example.desafio3dsm.controller.RecursosController
@@ -25,6 +27,7 @@ class AddEditResourceActivity : AppCompatActivity() {
     private lateinit var spTipo: Spinner
     private lateinit var etUrl: EditText
     private lateinit var etImagen: EditText
+    private lateinit var btnGaleria: Button
     private lateinit var btnGuardarRecurso: Button
     private lateinit var progressBar: ProgressBar
 
@@ -32,6 +35,15 @@ class AddEditResourceActivity : AppCompatActivity() {
 
     private var editMode = false
     private var recursoIdToEdit: String? = null
+
+    private val galleryLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            etImagen.setText(it.toString())
+            Toast.makeText(this, getString(R.string.toast_image_selected), Toast.LENGTH_SHORT).show()
+        }
+    }
 
     companion object {
         const val EXTRA_RECURSO_ID = "extra_recurso_id"
@@ -61,6 +73,7 @@ class AddEditResourceActivity : AppCompatActivity() {
         spTipo = findViewById(R.id.spTipo)
         etUrl = findViewById(R.id.etUrl)
         etImagen = findViewById(R.id.etImagen)
+        btnGaleria = findViewById(R.id.btnGaleria)
         btnGuardarRecurso = findViewById(R.id.btnGuardarRecurso)
         progressBar = findViewById(R.id.progressBar)
     }
@@ -104,14 +117,15 @@ class AddEditResourceActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        btnGaleria.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
+
         btnGuardarRecurso.setOnClickListener {
             guardarRecurso()
         }
     }
 
-    /**
-     * Valida los campos requeridos y realiza la llamada al controlador (POST para crear / PUT para actualizar).
-     */
     private fun guardarRecurso() {
         val titulo = etTitulo.text.toString().trim()
         val descripcion = etDescripcion.text.toString().trim()
@@ -119,7 +133,6 @@ class AddEditResourceActivity : AppCompatActivity() {
         val url = etUrl.text.toString().trim()
         val imagen = etImagen.text.toString().trim()
 
-        // Validación de campos obligatorios (título, descripción, url)
         if (titulo.isEmpty() || descripcion.isEmpty() || url.isEmpty()) {
             showError(getString(R.string.error_fill_required_fields))
             return
@@ -164,6 +177,7 @@ class AddEditResourceActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         btnGuardarRecurso.isEnabled = !isLoading
+        btnGaleria.isEnabled = !isLoading
     }
 
     private fun showError(message: String) {

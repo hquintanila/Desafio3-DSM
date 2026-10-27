@@ -36,7 +36,9 @@
     <string name="hint_resource_description">Descripción detallada *</string>
     <string name="hint_resource_url">Enlace URL del recurso (ej. https://...) *</string>
     <string name="hint_resource_image_url">URL de imagen descriptiva</string>
-    <string name="label_resource_type">Tipo de Recurso:</string>
+    <string name="label_resource_type">Tipo de Recurso (Categoría):</string>
+    <string name="btn_pick_gallery">Seleccionar imagen de la galería</string>
+    <string name="toast_image_selected">Imagen seleccionada correctamente</string>
 
     <!-- Arreglos para Spinners -->
     <string-array name="roles_array">
