@@ -18,19 +18,19 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Fila Principal: Imagen Grande a la Izquierda y Textos a la Derecha -->
+        <!-- Fila Principal: Imagen Más Grande (110dp) a la Izquierda y Textos a la Derecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="top"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="12dp">
 
-            <!-- Imagen Grande (96dp x 96dp) -->
+            <!-- Imagen (110dp x 110dp) -->
             <ImageView
                 android:id="@+id/ivImagenRecurso"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:scaleType="centerCrop"
                 android:background="#EAEAEA"
                 android:contentDescription="@string/app_name"
@@ -43,6 +43,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <!-- Fila Superior: Badge Tipo, Rating y Botón Favorito arriba a la derecha -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,10 +57,10 @@
                         android:layout_height="wrap_content"
                         android:background="#E3F2FD"
                         android:textColor="#1976D2"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:textStyle="bold"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp"
                         tools:text="Video" />
 
                     <View
@@ -72,9 +73,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#F57C00"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
+                        android:layout_marginEnd="4dp"
                         tools:text="⭐ 4.8 (12)" />
+
+                    <ImageButton
+                        android:id="@+id/btnFavorito"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/btn_favorite_add"
+                        android:src="@android:drawable/btn_star_big_off"
+                        app:tint="#9E9E9E" />
 
                 </LinearLayout>
 
@@ -82,7 +93,7 @@
                     android:id="@+id/tvCategoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textColor="#757575"
                     android:textStyle="bold"
                     android:layout_marginBottom="2dp"
@@ -92,7 +103,7 @@
                     android:id="@+id/tvTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#212121"
                     android:layout_marginBottom="4dp"
@@ -104,7 +115,7 @@
                     android:id="@+id/tvDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textColor="#616161"
                     android:maxLines="3"
                     android:ellipsize="end"
@@ -114,32 +125,12 @@
 
         </LinearLayout>
 
-        <!-- Fila de Favorito alineada a la derecha -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginBottom="8dp">
-
-            <ImageButton
-                android:id="@+id/btnFavorito"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/btn_favorite_add"
-                android:src="@android:drawable/btn_star_big_off"
-                app:tint="#9E9E9E" />
-
-        </LinearLayout>
-
         <!-- Barra Inferior Unificada: Calificar, Abrir Enlace, Editar y Eliminar juntos -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="4dp">
+            android:gravity="end">
 
             <Button
                 android:id="@+id/btnCalificar"
@@ -147,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="@string/btn_rate"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:paddingHorizontal="4dp" />
 
             <Button
@@ -156,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="@string/btn_open_link"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:paddingHorizontal="4dp" />
 
             <Button
@@ -166,7 +157,7 @@
                 android:layout_height="36dp"
                 android:text="@string/btn_edit"
                 android:textColor="#1565C0"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:paddingHorizontal="4dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -178,7 +169,7 @@
                 android:layout_height="36dp"
                 android:text="@string/btn_delete"
                 android:textColor="#C62828"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:paddingHorizontal="4dp"
                 android:visibility="gone"
                 tools:visibility="visible" />

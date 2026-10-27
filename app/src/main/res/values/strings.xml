@@ -1,10 +1,10 @@
 <resources>
     <!-- Nombre de la aplicación -->
-    <string name="app_name">ConectaEduc</string>
+    <string name="app_name">ConectaEduSV</string>
 
     <!-- Títulos de Pantalla y Secciones -->
-    <string name="title_main">ConectaEduc - Inicio</string>
-    <string name="title_welcome">¡Bienvenido a ConectaEduc!</string>
+    <string name="title_main">ConectaEduSV - Inicio</string>
+    <string name="title_welcome">¡Bienvenido a ConectaEduSV!</string>
     <string name="title_login">Iniciar Sesión</string>
     <string name="title_register">Registro de Usuario</string>
     <string name="title_profile">Perfil de Usuario</string>
@@ -97,7 +97,7 @@
     <string name="toast_password_changed">Contraseña actualizada exitosamente.</string>
 
     <!-- Mensajes de Bienvenida y Estado -->
-    <string name="welcome_message">Bienvenido a la plataforma educativa ConectaEduc. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
+    <string name="welcome_message">Bienvenido a la plataforma educativa ConectaEduSV. Selecciona una opción para comenzar a explorar tus recursos de aprendizaje.</string>
     <string name="loading_data">Cargando recursos educativos...</string>
     <string name="updating_data">Actualizando datos en el servidor...</string>
     <string name="empty_users_list">No hay usuarios registrados actualmente.</string>
@@ -106,7 +106,7 @@
     <string name="success_save">Guardado correctamente.</string>
     <string name="success_delete">Eliminado correctamente.</string>
     <string name="success_register">Usuario registrado exitosamente. Ahora puedes iniciar sesión.</string>
-    <string name="success_login">¡Bienvenido a ConectaEduc!</string>
+    <string name="success_login">¡Bienvenido a ConectaEduSV!</string>
     <string name="logged_in_info">Sesión activa:\nUsuario: %1$s\nEmail: %2$s\nRol: %3$s (ID: %4$s)</string>
 
     <!-- Etiquetas de Botones -->

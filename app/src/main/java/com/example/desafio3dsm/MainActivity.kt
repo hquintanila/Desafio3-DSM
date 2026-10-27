@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -216,6 +217,7 @@ class MainActivity : AppCompatActivity() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_perfil, null)
         val tvAvatar = dialogView.findViewById<TextView>(R.id.tvDialogAvatar)
         val tvInfo = dialogView.findViewById<TextView>(R.id.tvDialogInfo)
+        val btnClose = dialogView.findViewById<ImageButton>(R.id.btnCloseProfile)
         val btnCambiarPass = dialogView.findViewById<Button>(R.id.btnCambiarPassword)
         val btnLogoutDialog = dialogView.findViewById<Button>(R.id.btnDialogLogout)
 
@@ -225,6 +227,10 @@ class MainActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
 
         btnCambiarPass.setOnClickListener {
             dialog.dismiss()

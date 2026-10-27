@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Header de Usuario, Rol y Avatar de Perfil con Iniciales -->
+    <!-- Header de Usuario, Rol y Avatar de Perfil con Iniciales en el Lado Izquierdo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +16,21 @@
         android:orientation="horizontal"
         android:padding="16dp"
         android:gravity="center_vertical">
+
+        <!-- Avatar de Perfil a la Izquierda -->
+        <TextView
+            android:id="@+id/tvProfileAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_square_avatar"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginEnd="12dp"
+            tools:text="HD" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -42,25 +57,10 @@
 
         </LinearLayout>
 
-        <!-- Avatar de Perfil con Iniciales en Cuadrado -->
-        <TextView
-            android:id="@+id/tvProfileAvatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_square_avatar"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:focusable="true"
-            tools:text="HD" />
-
     </LinearLayout>
 
     <!-- Panel de Modo Docente (Sólo visible para el rol Docente) -->
     <LinearLayout
-        android:id="@+id/layoutDocentePanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF3E0"
@@ -69,7 +69,8 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="visible"
+        android:id="@+id/layoutDocentePanel">
 
         <TextView
             android:id="@+id/tvDocenteBadge"
