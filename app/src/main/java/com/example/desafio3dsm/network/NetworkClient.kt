@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object NetworkClient {
 
-    private const val BASE_URL = "https://6ae0c9dfbe3bc8fead97ec53.mockapi.io/"
+    private const val BASE_URL = "https://6ae0c9dfbe3bc8fead97ec52.mockapi.io/"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()

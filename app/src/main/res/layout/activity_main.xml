@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Header de Usuario y Rol -->
+    <!-- Header de Usuario, Rol y Avatar de Perfil con Iniciales -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,14 +42,19 @@
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnLogout"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/btn_logout"
-            android:src="@android:drawable/ic_lock_power_off"
-            app:tint="@android:color/white" />
+        <!-- Avatar de Perfil con Iniciales en Cuadrado -->
+        <TextView
+            android:id="@+id/tvProfileAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_square_avatar"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            tools:text="HD" />
 
     </LinearLayout>
 
@@ -78,11 +83,13 @@
 
         <Button
             android:id="@+id/btnCrearRecurso"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_create_resource"
             android:textColor="#E65100"
+            app:strokeColor="#E65100"
+            app:strokeWidth="1dp"
             android:textSize="12sp" />
 
     </LinearLayout>

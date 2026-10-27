@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ratingController: RatingController
 
     private lateinit var tvUserRoleBadge: TextView
-    private lateinit var btnLogout: ImageButton
+    private lateinit var tvProfileAvatar: TextView
     private lateinit var layoutDocentePanel: LinearLayout
     private lateinit var btnCrearRecurso: Button
 
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         tvUserRoleBadge = findViewById(R.id.tvUserRoleBadge)
-        btnLogout = findViewById(R.id.btnLogout)
+        tvProfileAvatar = findViewById(R.id.tvProfileAvatar)
         layoutDocentePanel = findViewById(R.id.layoutDocentePanel)
         btnCrearRecurso = findViewById(R.id.btnCrearRecurso)
 
@@ -107,16 +106,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRoleManagement() {
-        val userName = sessionManager.getUserName() ?: ""
+        val userName = sessionManager.getUserName() ?: "Usuario"
         val userRole = sessionManager.getUserRole() ?: getString(R.string.text_role_student)
 
         isDocenteUser = userRole.equals("Docente", ignoreCase = true)
         tvUserRoleBadge.text = getString(R.string.text_role_badge, userName, userRole)
+        tvProfileAvatar.text = obtenerIniciales(userName)
 
         if (isDocenteUser) {
             layoutDocentePanel.visibility = View.VISIBLE
         } else {
             layoutDocentePanel.visibility = View.GONE
+        }
+    }
+
+    private fun obtenerIniciales(nombre: String?): String {
+        if (nombre.isNullOrBlank()) return "U"
+        val partes = nombre.trim().split("\\s+".toRegex())
+        return if (partes.size >= 2) {
+            "${partes[0].take(1)}${partes[1].take(1)}".uppercase()
+        } else {
+            partes[0].take(2).uppercase()
         }
     }
 
@@ -177,14 +187,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        btnLogout.setOnClickListener {
-            mostrarDialogoCerrarSesion()
+        tvProfileAvatar.setOnClickListener {
+            mostrarDialogoPerfil()
         }
 
         btnCrearRecurso.setOnClickListener {
             val intent = Intent(this, AddEditResourceActivity::class.java)
             addEditResourceLauncher.launch(intent)
         }
+    }
+
+    private fun mostrarDialogoPerfil() {
+        val name = sessionManager.getUserName() ?: "Usuario"
+        val email = sessionManager.getUserEmail() ?: ""
+        val role = sessionManager.getUserRole() ?: "Estudiante"
+        val initials = obtenerIniciales(name)
+
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_perfil, null)
+        val tvAvatar = dialogView.findViewById<TextView>(R.id.tvDialogAvatar)
+        val tvInfo = dialogView.findViewById<TextView>(R.id.tvDialogInfo)
+        val btnLogoutDialog = dialogView.findViewById<Button>(R.id.btnDialogLogout)
+
+        tvAvatar.text = initials
+        tvInfo.text = getString(R.string.profile_info, name, email, role)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        btnLogoutDialog.setOnClickListener {
+            dialog.dismiss()
+            mostrarDialogoCerrarSesion()
+        }
+
+        dialog.show()
     }
 
     private fun abrirEditarRecurso(recurso: Recurso) {

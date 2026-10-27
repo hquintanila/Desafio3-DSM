@@ -1,5 +1,6 @@
 package com.example.desafio3dsm.controller
 
+import android.util.Log
 import com.example.desafio3dsm.R
 import com.example.desafio3dsm.api.ApiService
 import com.example.desafio3dsm.model.Usuario
@@ -39,16 +40,27 @@ class AuthController(
     }
 
     /**
-     * Inicia sesión consumiendo el endpoint /usuarios en MockAPI con limpieza de espacios (trim).
+     * Inicia sesión consumiendo el endpoint /usuarios en MockAPI con limpieza de espacios (trim)
+     * y logging detallado de la respuesta HTTP en Logcat.
      */
     fun login(email: String, clave: String, callback: AuthCallback<Usuario>) {
         val cleanEmail = email.trim()
         val cleanPassword = clave.trim()
 
+        Log.d("AuthController", "Intentando login con Email: '$cleanEmail'")
+
         apiService.getUsuarios().enqueue(object : Callback<List<Usuario>> {
             override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
+                Log.d("AuthController", "Login Response Code: ${response.code()}")
+                Log.d("AuthController", "Login Is Successful: ${response.isSuccessful}")
+
                 if (response.isSuccessful) {
                     val usuarios = response.body() ?: emptyList()
+                    Log.d("AuthController", "Total usuarios recibidos de MockAPI: ${usuarios.size}")
+                    usuarios.forEach { u ->
+                        Log.d("AuthController", "Usuario DB -> ID: ${u.id}, Email: '${u.email}', Clave: '${u.clave}', Rol: ${u.rol}")
+                    }
+
                     val usuarioEncontrado = usuarios.find { user ->
                         val dbEmail = user.email?.trim() ?: ""
                         val dbClave = user.clave?.trim() ?: ""
@@ -56,16 +68,21 @@ class AuthController(
                     }
 
                     if (usuarioEncontrado != null) {
+                        Log.d("AuthController", "¡Usuario autenticado con éxito: ${usuarioEncontrado.nombre}!")
                         callback.onSuccess(usuarioEncontrado)
                     } else {
+                        Log.d("AuthController", "Usuario no encontrado o credenciales incorrectas para: '$cleanEmail'")
                         callback.onError(R.string.error_user_not_found)
                     }
                 } else {
+                    val errorBody = response.errorBody()?.string() ?: "Sin error body"
+                    Log.d("AuthController", "Error HTTP en servidor: Code ${response.code()}, ErrorBody: $errorBody")
                     callback.onError(R.string.error_server)
                 }
             }
 
             override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
+                Log.d("AuthController", "Fallo en la red (onFailure): ${t.message}", t)
                 callback.onError(R.string.error_network)
             }
         })

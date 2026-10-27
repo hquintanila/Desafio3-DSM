@@ -62,9 +62,9 @@ class RecursosAdapter(
         private val tvTipoBadge: TextView = itemView.findViewById(R.id.tvTipoBadge)
         private val tvCalificacion: TextView = itemView.findViewById(R.id.tvCalificacion)
         private val btnFavorito: ImageButton = itemView.findViewById(R.id.btnFavorito)
+        private val tvCategoria: TextView = itemView.findViewById(R.id.tvCategoria)
         private val tvTitulo: TextView = itemView.findViewById(R.id.tvTitulo)
         private val tvDescripcion: TextView = itemView.findViewById(R.id.tvDescripcion)
-        private val tvUrl: TextView = itemView.findViewById(R.id.tvUrl)
         private val btnCalificar: Button = itemView.findViewById(R.id.btnCalificar)
         private val btnAbrirEnlace: Button = itemView.findViewById(R.id.btnAbrirEnlace)
 
@@ -78,7 +78,9 @@ class RecursosAdapter(
             tvTitulo.text = recurso.titulo ?: context.getString(R.string.text_no_title)
             tvDescripcion.text = recurso.descripcion ?: context.getString(R.string.text_no_description)
             tvTipoBadge.text = recurso.tipo ?: recurso.categoria ?: context.getString(R.string.filter_all)
-            tvUrl.text = recurso.url ?: context.getString(R.string.text_no_url)
+
+            val tipoRecurso = recurso.tipo ?: recurso.categoria ?: "General"
+            tvCategoria.text = context.getString(R.string.label_category, tipoRecurso)
 
             val rating = recurso.obtenerCalificacionPromedio()
             val totalVotos = recurso.obtenerTotalVotos()
@@ -134,7 +136,6 @@ class RecursosAdapter(
             }
 
             btnAbrirEnlace.setOnClickListener(openUrlAction)
-            tvUrl.setOnClickListener(openUrlAction)
 
             btnFavorito.setOnClickListener {
                 onFavoritoClick?.invoke(recurso)

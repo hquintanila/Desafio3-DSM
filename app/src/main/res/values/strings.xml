@@ -17,6 +17,7 @@
     <string name="title_recurso_detalle">Detalle de Recurso</string>
     <string name="title_recurso_crear">Crear Recurso Educativo</string>
     <string name="title_recurso_editar">Editar Recurso Educativo</string>
+    <string name="title_profile">Perfil de Usuario</string>
 
     <!-- Campos de Entrada e Insinuaciones (Hints) -->
     <string name="hint_nombre">Nombre completo</string>
@@ -25,6 +26,7 @@
     <string name="hint_confirm_password">Confirmar contraseña</string>
     <string name="label_role">Selecciona tu rol:</string>
     <string name="hint_search_resources">Buscar recursos por título o contenido...</string>
+    <string name="label_category">Categoría: %1$s</string>
 
     <!-- Campos del Formulario de Recurso -->
     <string name="hint_resource_title">Título del recurso *</string>
@@ -101,6 +103,7 @@
     <string name="success_register">Usuario registrado exitosamente. Ahora puedes iniciar sesión.</string>
     <string name="success_login">¡Bienvenido a AprendeApp!</string>
     <string name="logged_in_info">Sesión activa:\nUsuario: %1$s\nEmail: %2$s\nRol: %3$s (ID: %4$s)</string>
+    <string name="profile_info">Nombre: %1$s\nCorreo: %2$s\nRol: %3$s</string>
 
     <!-- Etiquetas de Botones -->
     <string name="btn_login">Iniciar Sesión</string>
