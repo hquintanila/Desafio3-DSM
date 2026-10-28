@@ -1,9 +1,11 @@
 package com.example.desafio3dsm.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -88,11 +90,24 @@ class AddEditResourceActivity : AppCompatActivity() {
     }
 
     private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.types_array,
-            android.R.layout.simple_spinner_item
-        )
+        val items = resources.getStringArray(R.array.types_array)
+        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getView(position, convertView, parent) as TextView
+                view.setTextColor(Color.parseColor("#212121"))
+                view.textSize = 16f
+                return view
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent) as TextView
+                view.setTextColor(Color.parseColor("#212121"))
+                view.setBackgroundColor(Color.WHITE)
+                view.textSize = 16f
+                view.setPadding(32, 28, 32, 28)
+                return view
+            }
+        }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spTipo.adapter = adapter
     }
