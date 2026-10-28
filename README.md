@@ -1,4 +1,4 @@
-# ConectaEduSV (AprendeApp)
+# ConectaEduSV 
 
 Aplicación móvil desarrollada en **Android Studio** utilizando **Kotlin**, diseñada bajo el patrón de arquitectura **MVC (Modelo-Vista-Controlador)** y conectada a un backend simulado en **MockAPI.io** mediante **Retrofit**.
 
