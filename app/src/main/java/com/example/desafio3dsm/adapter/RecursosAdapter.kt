@@ -87,7 +87,7 @@ class RecursosAdapter(
             val totalVotos = recurso.obtenerTotalVotos()
             tvCalificacion.text = context.getString(R.string.rating_format_with_count, rating, totalVotos)
 
-            // Estado de Favorito con tintes claros: Gris si no está seleccionado, Naranja brillante si es favorito
+            // Estado de Favorito
             val recursoId = recurso.id ?: ""
             val esFavorito = listaFavoritosIds.contains(recursoId)
 
@@ -110,18 +110,18 @@ class RecursosAdapter(
                 btnEliminarRecurso.visibility = View.GONE
             }
 
-            // Cargar imagen de recurso (Soporte para ad1, ap2, mv3 y URLs dinámicas)
-            val rawImg = recurso.imagen ?: ""
-            val imgUrl = when {
-                rawImg.contains("ad1", ignoreCase = true) || recurso.id == "1" -> "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400"
-                rawImg.contains("ap2", ignoreCase = true) || recurso.id == "2" -> "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400"
-                rawImg.contains("mv3", ignoreCase = true) || recurso.id == "3" -> "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400"
-                else -> rawImg
-            }
+            // Cargar imagen directamente desde la propiedad de la API (recurso.imagen)
+            val imgUrl = recurso.imagen ?: ""
 
             if (imgUrl.isNotEmpty()) {
+                val modelToLoad: Any = if (imgUrl.startsWith("content://") || imgUrl.startsWith("file://")) {
+                    Uri.parse(imgUrl)
+                } else {
+                    imgUrl
+                }
+
                 Glide.with(context)
-                    .load(imgUrl)
+                    .load(modelToLoad)
                     .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.ic_launcher_background)
                     .into(ivImagenRecurso)

@@ -1,5 +1,6 @@
 package com.example.desafio3dsm.view
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -42,6 +43,11 @@ class AddEditResourceActivity : AppCompatActivity() {
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
+            try {
+                contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            } catch (e: Exception) {
+                // Ignorar si no soporta persistencia
+            }
             etImagen.setText(it.toString())
             Toast.makeText(this, getString(R.string.toast_image_selected), Toast.LENGTH_SHORT).show()
         }
